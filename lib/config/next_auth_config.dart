@@ -10,9 +10,9 @@ class NextAuthConfig<T extends Map<String, dynamic>> {
   final HttpClient httpClient;
   /// Logger instance (optional)
   final Logger? logger;
-  /// server session cookie name (optional, default: __Secure-authjs.session-token for HTTPS, authjs.session-token for HTTP, must same as the one in the server)
+  /// server session cookie name (optional, default: __Secure-next-auth.session-token for HTTPS, next-auth.session-token for HTTP, must same as the one in the server)
   final String serverSessionCookieName;
-  /// server CSRF cookie name (optional, must same as the one in the server)
+  /// server CSRF cookie name (optional, must same as the one in the server， default: __Host-next-auth.csrf-token for HTTPS, next-auth.csrf-token for HTTP)
   final String serverCSRFTokenCookieName;
 
   NextAuthConfig({
@@ -20,7 +20,7 @@ class NextAuthConfig<T extends Map<String, dynamic>> {
     this.authBasePath = '/api/auth',
     required this.httpClient,
     this.logger,
-    this.serverSessionCookieName = "__miearapp.session-token",
-    this.serverCSRFTokenCookieName = "__miearapp.csrf-token",
+    this.serverSessionCookieName = "next-auth.session-token",
+    this.serverCSRFTokenCookieName = "next-auth.csrf-token",
   });
 }
