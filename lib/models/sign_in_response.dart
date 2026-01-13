@@ -5,9 +5,5 @@ class SignInResponse {
   final int status;
   final bool ok;
 
-  SignInResponse({
-    this.error,
-    required this.status,
-    required this.ok,
-  });
+  SignInResponse({this.error, required this.status, required this.ok});
 }

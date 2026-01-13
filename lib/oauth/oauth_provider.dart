@@ -7,7 +7,8 @@ class OAuthAuthorizationData {
     required this.idToken,
   });
 
-  bool get hasValidAuthorizationCode => authorizationCode != null && authorizationCode!.isNotEmpty;
+  bool get hasValidAuthorizationCode =>
+      authorizationCode != null && authorizationCode!.isNotEmpty;
   bool get hasValidIdToken => idToken.isNotEmpty;
 }
 

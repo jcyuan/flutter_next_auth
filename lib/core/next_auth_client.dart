@@ -105,21 +105,23 @@ class NextAuthClient<T extends Map<String, dynamic>> {
 
         // refresh session
         await _loadSession();
-      
+
         return response;
       } else {
         _logger?.error('Access token not found in signIn response: $response');
         return SignInResponse(
           error: SignInError(
             code: SignInErrorCode.serverError,
-            exception: SignInException('access token not found in signIn response'),
+            exception: SignInException(
+              'access token not found in signIn response',
+            ),
           ),
           status: 500,
           ok: false,
         );
       }
     }
-    
+
     return response;
   }
 
@@ -129,7 +131,9 @@ class NextAuthClient<T extends Map<String, dynamic>> {
     }
 
     await _authService.signOut();
-    _oauthRegistry.getOAuthProviders().forEach((provider) => provider.signOut());
+    _oauthRegistry.getOAuthProviders().forEach(
+      (provider) => provider.signOut(),
+    );
     _setSession = null;
     _setStatus = SessionStatus.unauthenticated;
     _eventBus.fire(SignedOutEvent());
@@ -143,7 +147,7 @@ class NextAuthClient<T extends Map<String, dynamic>> {
     return updatedSession;
   }
 
-  Future<String?> getCSRFToken({ bool forceNew = false }) async {
+  Future<String?> getCSRFToken({bool forceNew = false}) async {
     return await _authService.getCSRFToken(forceNew: forceNew);
   }
 
@@ -177,4 +181,3 @@ class NextAuthClient<T extends Map<String, dynamic>> {
     }
   }
 }
-

@@ -1,8 +1,4 @@
-enum SignInErrorCode {
-  networkError,
-  invalidLogin,
-  serverError,
-}
+enum SignInErrorCode { networkError, invalidLogin, serverError }
 
 class SignInError {
   final SignInErrorCode code;

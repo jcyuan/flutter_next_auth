@@ -4,4 +4,3 @@ abstract class Logger {
   void debug(String message);
   void warn(String message);
 }
-

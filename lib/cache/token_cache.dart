@@ -24,22 +24,22 @@ class TokenCache {
     WebOptions? webOptions,
     WindowsOptions? windowsOptions,
   }) : _storage = FlutterSecureStorage(
-          aOptions: androidOptions ?? const AndroidOptions(),
-          iOptions: iosOptions ?? const IOSOptions(),
-          lOptions: linuxOptions ?? const LinuxOptions(),
-          webOptions: webOptions ?? const WebOptions(),
-          wOptions: windowsOptions ?? const WindowsOptions(),
-        );
+         aOptions: androidOptions ?? const AndroidOptions(),
+         iOptions: iosOptions ?? const IOSOptions(),
+         lOptions: linuxOptions ?? const LinuxOptions(),
+         webOptions: webOptions ?? const WebOptions(),
+         wOptions: windowsOptions ?? const WindowsOptions(),
+       );
 
   /// Initialize cache by loading values from storage
   Future<void> initialize() async {
     if (_initialized) return;
-    
+
     final cookie = await getCSRFCookie();
     if (cookie != null) {
       _csrfToken = _extractCSRFTokenFromCookie(cookie);
     }
-    
+
     _initialized = true;
   }
 
@@ -58,13 +58,13 @@ class TokenCache {
       debugPrint('[NextAuth::TokenCache] is not initialized yet');
       return null;
     }
-    
+
     // Check if token is still valid in storage
     final cookie = await getCSRFCookie();
     if (cookie != null) {
       return _csrfToken;
     }
-    
+
     return null;
   }
 
@@ -137,10 +137,7 @@ class TokenCache {
         return null;
       }
 
-      final token = Token(
-        token: tokenString,
-        expiration: expiresAt,
-      );
+      final token = Token(token: tokenString, expiration: expiresAt);
 
       // Check if token is expired
       if (!token.isValid) {
@@ -163,9 +160,7 @@ class TokenCache {
       return;
     }
 
-    final data = <String, dynamic>{
-      'token': token,
-    };
+    final data = <String, dynamic>{'token': token};
     if (expiresAt != null) {
       data['expiresAt'] = expiresAt;
     }

@@ -54,7 +54,7 @@ void main() {
   //   - StatusChangedEvent: fired when session status changes
   //   - SessionChangedEvent: fired when session data changes
   final eventBus = nextAuthClient.eventBus;
-  
+
   // listen to SignIn event - save jwt token for backend API authorization
   eventBus.on<SignedInEvent>().listen((event) {
     // event.accessToken is a Token object containing:
@@ -124,6 +124,6 @@ void main() {
   // for state management libraries, you can currently choose between
   // - next_auth_riverpod (https://github.com/jcyuan/flutter_next_auth_riverpod)
   // - next_auth_bloc (https://github.com/jcyuan/flutter_next_auth_bloc)
-  
+
   exit(0);
 }

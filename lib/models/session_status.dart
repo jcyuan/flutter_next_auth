@@ -1,7 +1,1 @@
-enum SessionStatus {
-  initial,
-  loading,
-  authenticated,
-  unauthenticated,
-}
-
+enum SessionStatus { initial, loading, authenticated, unauthenticated }

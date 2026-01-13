@@ -1,11 +1,6 @@
 import 'package:flutter_next_auth/http/http_response.dart';
 
-enum HttpClientResponseType {
-  json,
-  stream,
-  plain,
-  bytes,
-}
+enum HttpClientResponseType { json, stream, plain, bytes }
 
 class HttpClientOptions {
   Map<String, String>? cookies;
@@ -36,6 +31,10 @@ class HttpClientOptions {
 }
 
 abstract class HttpClient {
-  Future<HttpResponse> get(String url, { HttpClientOptions? options });
-  Future<HttpResponse> post(String url, { HttpClientOptions? options, Object? body });
+  Future<HttpResponse> get(String url, {HttpClientOptions? options});
+  Future<HttpResponse> post(
+    String url, {
+    HttpClientOptions? options,
+    Object? body,
+  });
 }

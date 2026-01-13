@@ -21,7 +21,9 @@ class AuthService<T extends Map<String, dynamic>> {
     required NextAuthConfig<T> config,
     required OAuthProviderRegistry oauthRegistry,
     required TokenCache tokenCache,
-  }) : _config = config, _oauthRegistry = oauthRegistry, _tokenCache = tokenCache;
+  }) : _config = config,
+       _oauthRegistry = oauthRegistry,
+       _tokenCache = tokenCache;
 
   Logger? get logger => _config.logger;
 
@@ -38,16 +40,25 @@ class AuthService<T extends Map<String, dynamic>> {
     try {
       SignInResponse response;
       if (provider == 'email') {
-        assert(emailOptions != null, 'emailOptions is required for email provider');
+        assert(
+          emailOptions != null,
+          'emailOptions is required for email provider',
+        );
         response = await _signInWithEmail(emailOptions!);
       } else if (provider == 'credentials') {
-        assert(credentialsOptions != null, 'credentialsOptions is required for credentials provider');
+        assert(
+          credentialsOptions != null,
+          'credentialsOptions is required for credentials provider',
+        );
         response = await _signInWithCredentials(credentialsOptions!);
       } else {
-        assert(oauthOptions != null, 'oauthOptions is required for OAuth provider');
+        assert(
+          oauthOptions != null,
+          'oauthOptions is required for OAuth provider',
+        );
         response = await _signInWithOAuth(provider, oauthOptions!);
       }
-      
+
       return response;
     } catch (e) {
       logger?.error('signIn error', e);
@@ -78,16 +89,16 @@ class AuthService<T extends Map<String, dynamic>> {
       options: HttpClientOptions(
         contentType: 'application/json',
         cookies: await _getCookieList(),
-        headers: {
-          'login-client': 'app'
-        },
+        headers: {'login-client': 'app'},
       ),
     );
 
     return await _handleSignInResponse(response);
   }
 
-  Future<Map<String, String>?> _getCookieList({bool attachAccessToken = true }) async {
+  Future<Map<String, String>?> _getCookieList({
+    bool attachAccessToken = true,
+  }) async {
     final cookieList = <String, String>{};
 
     final csrfCookie = await _tokenCache.getCSRFCookie();
@@ -101,7 +112,7 @@ class AuthService<T extends Map<String, dynamic>> {
         cookieList[_config.serverSessionCookieName] = accessToken.token;
       }
     }
-    
+
     cookieList.removeWhere((key, value) => value.isEmpty);
 
     return cookieList.isEmpty ? null : cookieList;
@@ -122,26 +133,31 @@ class AuthService<T extends Map<String, dynamic>> {
         'csrfToken': await getCSRFToken(),
         ...options.toJson(),
         'json': true,
-        'redirect': false
+        'redirect': false,
       },
       options: HttpClientOptions(
         contentType: 'application/x-www-form-urlencoded',
         responseType: HttpClientResponseType.json,
         cookies: await _getCookieList(),
-        headers: {
-          'login-client': 'app'
+        headers: {'login-client': 'app'},
+        validateStatus: (status) {
+          return status != null && status < 500;
         },
-        validateStatus: (status) { return status != null && status < 500; },
       ),
     );
 
     return _handleSignInResponse(response);
   }
 
-  Future<SignInResponse> _signInWithOAuth(String provider, OAuthSignInOptions options) async {
+  Future<SignInResponse> _signInWithOAuth(
+    String provider,
+    OAuthSignInOptions options,
+  ) async {
     final oauthProvider = _oauthRegistry.getProvider(provider);
     if (oauthProvider == null) {
-      throw Exception('OAuth provider $provider not found, please register your own OAuth provider');
+      throw Exception(
+        'OAuth provider $provider not found, please register your own OAuth provider',
+      );
     }
 
     if (!oauthProvider.isInitialized) {
@@ -151,19 +167,20 @@ class AuthService<T extends Map<String, dynamic>> {
     final authorizationData = await oauthProvider.getAuthorizationData();
     final url = apiBaseUrl(_config.domain, _config.authBasePath, 'oauth');
 
-    final response = await _config.httpClient.post(url,
+    final response = await _config.httpClient.post(
+      url,
       body: {
         'provider': provider,
         'idToken': authorizationData.idToken,
-        'code': authorizationData.hasValidAuthorizationCode ? authorizationData.authorizationCode! : null,
+        'code': authorizationData.hasValidAuthorizationCode
+            ? authorizationData.authorizationCode!
+            : null,
         ...options.toJson(),
       },
       options: HttpClientOptions(
         contentType: 'application/json',
         cookies: await _getCookieList(),
-        headers: {
-          'login-client': 'app'
-        },
+        headers: {'login-client': 'app'},
       ),
     );
 
@@ -175,14 +192,15 @@ class AuthService<T extends Map<String, dynamic>> {
     if (cookies != null && cookies.isNotEmpty) {
       try {
         final csrfCookieHeader = cookies.firstWhere(
-          (element) => element.startsWith('${_config.serverCSRFTokenCookieName}='),
+          (element) =>
+              element.startsWith('${_config.serverCSRFTokenCookieName}='),
           orElse: () => '',
         );
-        
+
         if (csrfCookieHeader.isNotEmpty) {
           final cookieValue = _parseCookieValue(csrfCookieHeader);
           final expiresAt = _parseCookieExpiration(csrfCookieHeader);
-          
+
           await _tokenCache.setCSRFCookie(cookieValue, expiresAt: expiresAt);
         }
       } catch (e) {
@@ -196,11 +214,11 @@ class AuthService<T extends Map<String, dynamic>> {
   String? _parseCookieValue(String cookieHeader) {
     final parts = cookieHeader.split(';');
     if (parts.isEmpty) return null;
-    
+
     final nameValue = parts[0].trim();
     final equalsIndex = nameValue.indexOf('=');
     if (equalsIndex == -1) return null;
-    
+
     return nameValue.substring(equalsIndex + 1);
   }
 
@@ -210,10 +228,10 @@ class AuthService<T extends Map<String, dynamic>> {
   int? _parseCookieExpiration(String cookieHeader) {
     final parts = cookieHeader.split(';');
     int? expiresValue;
-    
+
     for (final part in parts) {
       final trimmed = part.trim().toLowerCase();
-      
+
       if (trimmed.startsWith('max-age=')) {
         final maxAgeValue = trimmed.substring(8).trim();
         try {
@@ -237,7 +255,10 @@ class AuthService<T extends Map<String, dynamic>> {
           } catch (_) {
             // Fallback: try DateTime.parse for ISO and other formats
             // Remove timezone suffix if present for better compatibility
-            final cleanedValue = expiresDateValue.replaceAll(RegExp(r'\s+GMT$'), '');
+            final cleanedValue = expiresDateValue.replaceAll(
+              RegExp(r'\s+GMT$'),
+              '',
+            );
             date = DateTime.parse(cleanedValue);
           }
           expiresValue = date.millisecondsSinceEpoch;
@@ -246,7 +267,7 @@ class AuthService<T extends Map<String, dynamic>> {
         }
       }
     }
-    
+
     return expiresValue;
   }
 
@@ -254,16 +275,22 @@ class AuthService<T extends Map<String, dynamic>> {
     final body = response.body as Map<String, dynamic>?;
     final url = body?['url'];
 
-    if (response.statusCode == 200 && !(url?.toLowerCase().contains('error') ?? true)) {
+    if (response.statusCode == 200 &&
+        !(url?.toLowerCase().contains('error') ?? true)) {
       // sign in success
       final headers = response.headers;
       final cookies = headers['set-cookie'];
-      final accessToken = cookies?.firstWhere((element) => element.startsWith('${_config.serverSessionCookieName}='), orElse: () => '');
+      final accessToken = cookies?.firstWhere(
+        (element) => element.startsWith('${_config.serverSessionCookieName}='),
+        orElse: () => '',
+      );
       if (accessToken == null || accessToken.isEmpty) {
         return SignInResponse(
           error: SignInError(
             code: SignInErrorCode.serverError,
-            exception: SignInException('access token not found in the response headers'),
+            exception: SignInException(
+              'access token not found in the response headers',
+            ),
           ),
           status: 500,
           ok: false,
@@ -272,15 +299,15 @@ class AuthService<T extends Map<String, dynamic>> {
 
       final accessTokenValue = _parseCookieValue(accessToken);
       final accesssTokenExpiresAt = _parseCookieExpiration(accessToken);
-      await _tokenCache.setAccessToken(accessTokenValue, expiresAt: accesssTokenExpiresAt);
-      
+      await _tokenCache.setAccessToken(
+        accessTokenValue,
+        expiresAt: accesssTokenExpiresAt,
+      );
+
       // cache csrf token
       await _cacheCSRFCookieFromHeaders(response);
-    
-      return SignInResponse(
-        ok: true,
-        status: 200,
-      );
+
+      return SignInResponse(ok: true, status: 200);
     } else {
       if (url != null && url.isNotEmpty) {
         try {
@@ -296,23 +323,25 @@ class AuthService<T extends Map<String, dynamic>> {
               ok: false,
             );
           }
-        }
-        catch (_) {
-        }
+        } catch (_) {}
       }
     }
 
     return SignInResponse(
       error: SignInError(
         code: SignInErrorCode.serverError,
-        exception: SignInException('login failed and the callback url does not contain error parameter'),
+        exception: SignInException(
+          'login failed and the callback url does not contain error parameter',
+        ),
       ),
       status: 500,
       ok: false,
     );
   }
 
-  Future<SignInResponse> _handleOAuthSignInResponse(HttpResponse response) async {
+  Future<SignInResponse> _handleOAuthSignInResponse(
+    HttpResponse response,
+  ) async {
     final body = response.body;
     if (body == null) {
       return SignInResponse(
@@ -330,7 +359,9 @@ class AuthService<T extends Map<String, dynamic>> {
       return SignInResponse(
         error: SignInError(
           code: SignInErrorCode.invalidLogin,
-          exception: SignInException(apiResult.message ?? "oauth.error-authentication-failed"),
+          exception: SignInException(
+            apiResult.message ?? "oauth.error-authentication-failed",
+          ),
         ),
         status: apiResult.error,
         ok: false,
@@ -339,25 +370,28 @@ class AuthService<T extends Map<String, dynamic>> {
 
     final token = apiResult.data?['accessToken'] as String?;
     assert(token != null, 'accessToken is required');
-    
+
     // cache access token
     await _tokenCache.setAccessToken(token);
-    
+
     // cache refresh token (set null to delete if not present)
     final refreshToken = apiResult.data?['refreshToken'] as String?;
-    final refreshTokenExpiresAt = apiResult.data?['refreshTokenExpiresAt'] as int?;
-    await _tokenCache.setRefreshToken(refreshToken, expiresAt: refreshTokenExpiresAt);
+    final refreshTokenExpiresAt =
+        apiResult.data?['refreshTokenExpiresAt'] as int?;
+    await _tokenCache.setRefreshToken(
+      refreshToken,
+      expiresAt: refreshTokenExpiresAt,
+    );
 
     // cache csrf token
     await _cacheCSRFCookieFromHeaders(response);
-    
-    return SignInResponse(
-      ok: true,
-      status: 200,
-    );
+
+    return SignInResponse(ok: true, status: 200);
   }
 
-  ({ int error, String? message, ReturnData? data }) _parseApiResult<ReturnData extends Map<String, dynamic>>(Map<String, dynamic> body) {
+  ({int error, String? message, ReturnData? data}) _parseApiResult<
+    ReturnData extends Map<String, dynamic>
+  >(Map<String, dynamic> body) {
     final errorValue = body['error'] as int;
     return (
       error: errorValue,
@@ -368,24 +402,20 @@ class AuthService<T extends Map<String, dynamic>> {
 
   Future<void> signOut() async {
     try {
-      final url = apiBaseUrl(
-        _config.domain,
-        _config.authBasePath,
-        'signout',
-      );
+      final url = apiBaseUrl(_config.domain, _config.authBasePath, 'signout');
 
       await _config.httpClient.post(
         url,
-        body: {
-          'csrfToken': await getCSRFToken(),
-        },
+        body: {'csrfToken': await getCSRFToken()},
         options: HttpClientOptions(
           contentType: 'application/x-www-form-urlencoded',
           responseType: HttpClientResponseType.plain,
           cookies: await _getCookieList(attachAccessToken: true),
           followRedirects: false,
-          validateStatus: (status) { return status != null && status < 500; },
-        )
+          validateStatus: (status) {
+            return status != null && status < 500;
+          },
+        ),
       );
     } catch (e) {
       logger?.error('signOut error', e);
@@ -396,11 +426,7 @@ class AuthService<T extends Map<String, dynamic>> {
 
   Future<T?> updateSession(T data) async {
     try {
-      final url = apiBaseUrl(
-        _config.domain,
-        _config.authBasePath,
-        'session',
-      );
+      final url = apiBaseUrl(_config.domain, _config.authBasePath, 'session');
 
       final response = await _config.httpClient.post(
         url,
@@ -408,10 +434,7 @@ class AuthService<T extends Map<String, dynamic>> {
           contentType: 'application/json',
           cookies: await _getCookieList(attachAccessToken: true),
         ),
-        body: {
-          'csrfToken': await getCSRFToken(),
-          'data': data,
-        },
+        body: {'csrfToken': await getCSRFToken(), 'data': data},
       );
 
       final body = response.body;
@@ -421,14 +444,13 @@ class AuthService<T extends Map<String, dynamic>> {
       }
 
       return null;
-
     } catch (e) {
       logger?.error('updateSession error', e);
       return null;
     }
   }
 
-  Future<String?> getCSRFToken({ bool forceNew = false }) async {
+  Future<String?> getCSRFToken({bool forceNew = false}) async {
     // 1, get from cache first
     if (!forceNew) {
       final cachedToken = await _tokenCache.getCSRFToken();
@@ -439,21 +461,15 @@ class AuthService<T extends Map<String, dynamic>> {
 
     // 2, if no cache, fetch from server then cache it
     try {
-      final url = apiBaseUrl(
-        _config.domain,
-        _config.authBasePath,
-        'csrf',
-      );
+      final url = apiBaseUrl(_config.domain, _config.authBasePath, 'csrf');
 
-      final response = await _config.httpClient.get(url,
-        options: HttpClientOptions(
-          contentType: 'application/json',
-        )
+      final response = await _config.httpClient.get(
+        url,
+        options: HttpClientOptions(contentType: 'application/json'),
       );
       await _cacheCSRFCookieFromHeaders(response);
-      
-      return await _tokenCache.getCSRFToken();
 
+      return await _tokenCache.getCSRFToken();
     } catch (e) {
       logger?.error('getCSRFToken error', e);
       return null;
@@ -462,11 +478,7 @@ class AuthService<T extends Map<String, dynamic>> {
 
   Future<T?> getSession() async {
     try {
-      final url = apiBaseUrl(
-        _config.domain,
-        _config.authBasePath,
-        'session',
-      );
+      final url = apiBaseUrl(_config.domain, _config.authBasePath, 'session');
 
       final response = await _config.httpClient.get(
         url,
@@ -483,7 +495,6 @@ class AuthService<T extends Map<String, dynamic>> {
       }
 
       return null;
-
     } catch (e) {
       logger?.error('getSession error', e);
       return null;

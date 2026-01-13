@@ -3,13 +3,14 @@ class EmailSignInOptions {
   final String code;
   final String? turnstileToken;
 
-  EmailSignInOptions({required this.email, required this.code, this.turnstileToken});
+  EmailSignInOptions({
+    required this.email,
+    required this.code,
+    this.turnstileToken,
+  });
 
   Map<String, String> toJson() {
-    final params = {
-      'email': email,
-      'code': code,
-    };
+    final params = {'email': email, 'code': code};
     if (turnstileToken != null) {
       params['turnstile'] = turnstileToken!;
     }
@@ -22,13 +23,14 @@ class CredentialsSignInOptions {
   final String password;
   final String? turnstileToken;
 
-  CredentialsSignInOptions({required this.email, required this.password, this.turnstileToken});
+  CredentialsSignInOptions({
+    required this.email,
+    required this.password,
+    this.turnstileToken,
+  });
 
   Map<String, String> toJson() {
-    final params = {
-      'email': email,
-      'password': password,
-    };
+    final params = {'email': email, 'password': password};
     if (turnstileToken != null) {
       params['turnstile'] = turnstileToken!;
     }
@@ -43,9 +45,7 @@ class OAuthSignInOptions {
   OAuthSignInOptions({required this.provider, this.turnstileToken});
 
   Map<String, String> toJson() {
-    final params = {
-      'provider': provider,
-    };
+    final params = {'provider': provider};
     if (turnstileToken != null) {
       params['turnstile'] = turnstileToken!;
     }
