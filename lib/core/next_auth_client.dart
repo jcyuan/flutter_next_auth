@@ -17,8 +17,8 @@ import 'package:flutter_next_auth_core/utils/logger.dart';
 /// NextAuth client instance
 /// Create an instance and use it to manage authentication
 class NextAuthClient<T> {
-  final NextAuthConfig _config;
-  late final AuthService<T> _authService;
+  final NextAuthConfig<T> _config;
+  late final AuthService _authService;
   late final OAuthProviderRegistry _oauthRegistry;
   late final EventBus _eventBus;
   late final TokenCache _tokenCache;
@@ -32,7 +32,7 @@ class NextAuthClient<T> {
   NextAuthClient(this._config) {
     _oauthRegistry = OAuthProviderRegistry();
     _tokenCache = TokenCache();
-    _authService = AuthService<T>(
+    _authService = AuthService(
       config: _config,
       oauthRegistry: _oauthRegistry,
       tokenCache: _tokenCache,
@@ -139,7 +139,7 @@ class NextAuthClient<T> {
     _eventBus.fire(SignedOutEvent());
   }
 
-  Future<T?> updateSession(T data) async {
+  Future<T?> updateSession(Map<String, dynamic> data) async {
     final updatedSession = await _authService.updateSession(data);
     if (updatedSession != null) {
       _setSession = updatedSession;
