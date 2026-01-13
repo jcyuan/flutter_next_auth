@@ -484,7 +484,7 @@ class AuthService<T> {
         url,
         options: HttpClientOptions(
           contentType: 'application/json',
-          cookies: await _getCookieList(attachAccessToken: false),
+          cookies: await _getCookieList(attachAccessToken: true),
         ),
       );
 
