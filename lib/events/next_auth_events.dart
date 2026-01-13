@@ -1,6 +1,5 @@
-import 'package:flutter_next_auth_client/cache/token.dart';
-
-import 'package:flutter_next_auth_client/models/session_status.dart';
+import 'package:flutter_next_auth_core/cache/token.dart';
+import 'package:flutter_next_auth_core/models/session_status.dart';
 
 /// Base class for all NextAuth events
 abstract class NextAuthEvent {}

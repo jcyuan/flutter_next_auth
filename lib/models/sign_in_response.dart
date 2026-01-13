@@ -1,4 +1,4 @@
-import 'package:flutter_next_auth_client/models/sign_in_error.dart';
+import 'package:flutter_next_auth_core/models/sign_in_error.dart';
 
 class SignInResponse {
   final SignInError? error;

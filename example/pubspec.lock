@@ -86,7 +86,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_next_auth_client:
+  flutter_next_auth_core:
     dependency: "direct main"
     description:
       path: ".."

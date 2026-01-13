@@ -11,7 +11,7 @@ example/
 │   ├── simple_dio_httpclient.dart         # Simple HTTP client implementation using Dio
 │   └── providers/
 │       └── google_oauth_provider.dart     # Example Google OAuth provider implementation
-├── pubspec.yaml                           # Flutter project configuration, includes dio, google_sign_in and flutter_next_auth_client dependencies
+├── pubspec.yaml                           # Flutter project configuration, includes dio, google_sign_in and flutter_next_auth_core dependencies
 └── README.md                              # Initialization steps and important notes
 ```
 
@@ -19,7 +19,7 @@ example/
 
 ### 1. Dependencies
 
-This example project requires `dio` (for HTTP client implementation), `google_sign_in` (for OAuth example), and `flutter_next_auth_client`:
+This example project requires `dio` (for HTTP client implementation), `google_sign_in` (for OAuth example), and `flutter_next_auth_core`:
 
 ```yaml
 dependencies:
@@ -27,11 +27,11 @@ dependencies:
     sdk: flutter
   dio: ^5.1.1
   google_sign_in: ^7.2.0
-  flutter_next_auth_client:
-    path: ../../flutter_next_auth
+  flutter_next_auth_core:
+    path: ../../flutter_next_auth_core
 ```
 
-Note: `dio` is not a dependency of the `flutter_next_auth_client` package. It's only needed in this example because the demo HTTP client implementation uses Dio. You can use any HTTP client library as long as it implements the `HttpClient` interface.
+Note: `dio` is not a dependency of the `flutter_next_auth_core` package. It's only needed in this example because the demo HTTP client implementation uses Dio. You can use any HTTP client library as long as it implements the `HttpClient` interface.
 
 ### 2. HTTP Client Implementation
 
@@ -72,7 +72,7 @@ Create a `NextAuthConfig` with the following required parameters:
 
 To integrate NextAuthClient into your project:
 
-1. Add `flutter_next_auth_client` to your `pubspec.yaml`
+1. Add `flutter_next_auth_core` to your `pubspec.yaml`
 2. Implement the `HttpClient` interface (or use the provided `SimpleDioHttpClient` as a reference)
 3. Create `NextAuthConfig` with your server configuration
 4. Configure cookie names to match your server-side NextAuth.js configuration

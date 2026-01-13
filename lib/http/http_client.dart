@@ -1,4 +1,4 @@
-import 'package:flutter_next_auth_client/http/http_response.dart';
+import 'package:flutter_next_auth_core/http/http_response.dart';
 
 enum HttpClientResponseType { json, stream, plain, bytes }
 
