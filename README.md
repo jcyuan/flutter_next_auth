@@ -1,4 +1,4 @@
-# flutter_next_auth
+# flutter_next_auth_client
 
 This is a Flutter client library for **quickly integrating with NextAuth v4.x backend authorization APIs**.
 
@@ -18,14 +18,14 @@ It wraps common NextAuth client capabilities (`csrf` / `session` / `signin` / `s
 ### Option 1: Add via CLI (recommended)
 
 ```bash
-flutter pub add flutter_next_auth
+flutter pub add flutter_next_auth_client
 ```
 
 ### Option 2: Edit `pubspec.yaml` manually
 
 ```yaml
 dependencies:
-  flutter_next_auth: ^1.0.0
+  flutter_next_auth_client: ^1.0.0
 ```
 
 Then run:
@@ -39,7 +39,7 @@ flutter pub get
 ## 📥 Import
 
 ```dart
-import 'package:flutter_next_auth/next_auth.dart';
+import 'package:flutter_next_auth_client/next_auth.dart';
 ```
 
 ---

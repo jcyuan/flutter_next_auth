@@ -1,4 +1,4 @@
-import 'package:flutter_next_auth/oauth/oauth_provider.dart';
+import 'package:flutter_next_auth_client/oauth/oauth_provider.dart';
 
 class OAuthProviderRegistry {
   final Map<String, OAuthProvider> _providers = {};

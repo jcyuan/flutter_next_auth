@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_next_auth/oauth/oauth_provider.dart';
+import 'package:flutter_next_auth_client/oauth/oauth_provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 // example Google OAuth provider implementation

@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter_next_auth/config/next_auth_config.dart';
-import 'package:flutter_next_auth/core/next_auth_client.dart';
-import 'package:flutter_next_auth/events/next_auth_events.dart';
+import 'package:flutter_next_auth_client/config/next_auth_config.dart';
+import 'package:flutter_next_auth_client/core/next_auth_client.dart';
+import 'package:flutter_next_auth_client/events/next_auth_events.dart';
 import 'package:next_auth_client_example/simple_dio_httpclient.dart';
 
 // NextAuthClient initialization example

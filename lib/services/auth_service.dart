@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:flutter_next_auth/cache/token_cache.dart';
-import 'package:flutter_next_auth/config/next_auth_config.dart';
-import 'package:flutter_next_auth/core/exception/signin_exception.dart';
-import 'package:flutter_next_auth/http/http_client.dart';
-import 'package:flutter_next_auth/http/http_response.dart';
-import 'package:flutter_next_auth/models/sign_in_error.dart';
-import 'package:flutter_next_auth/models/sign_in_options.dart';
-import 'package:flutter_next_auth/models/sign_in_response.dart';
-import 'package:flutter_next_auth/oauth/oauth_provider_registry.dart';
-import 'package:flutter_next_auth/utils/api_utils.dart' show apiBaseUrl;
-import 'package:flutter_next_auth/utils/logger.dart';
+import 'package:flutter_next_auth_client/cache/token_cache.dart';
+import 'package:flutter_next_auth_client/config/next_auth_config.dart';
+import 'package:flutter_next_auth_client/core/exception/signin_exception.dart';
+import 'package:flutter_next_auth_client/http/http_client.dart';
+import 'package:flutter_next_auth_client/http/http_response.dart';
+import 'package:flutter_next_auth_client/models/sign_in_error.dart';
+import 'package:flutter_next_auth_client/models/sign_in_options.dart';
+import 'package:flutter_next_auth_client/models/sign_in_response.dart';
+import 'package:flutter_next_auth_client/oauth/oauth_provider_registry.dart';
+import 'package:flutter_next_auth_client/utils/api_utils.dart' show apiBaseUrl;
+import 'package:flutter_next_auth_client/utils/logger.dart';
 
 class AuthService<T extends Map<String, dynamic>> {
   final NextAuthConfig<T> _config;

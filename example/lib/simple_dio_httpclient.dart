@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_next_auth/http/http_client.dart';
-import 'package:flutter_next_auth/http/http_response.dart';
+import 'package:flutter_next_auth_client/http/http_client.dart';
+import 'package:flutter_next_auth_client/http/http_response.dart';
 
 // simple HTTP client implementation example
 // recommended to integrate directly with Dio, enum items are consistent with Dio

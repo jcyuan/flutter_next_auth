@@ -13,7 +13,7 @@ dependencies:
 
   dio: ^5.1.1
   google_sign_in: ^7.2.0
-  flutter_next_auth:
+  flutter_next_auth_client:
     path: ../../flutter_next_auth
 
 dev_dependencies:

@@ -1,18 +1,18 @@
 import 'dart:async';
 
 import 'package:event_bus/event_bus.dart';
-import 'package:flutter_next_auth/core/exception/signin_exception.dart';
-import 'package:flutter_next_auth/models/sign_in_response.dart';
-import 'package:flutter_next_auth/cache/token_cache.dart';
-import 'package:flutter_next_auth/config/next_auth_config.dart';
-import 'package:flutter_next_auth/events/next_auth_events.dart';
-import 'package:flutter_next_auth/models/sign_in_error.dart';
-import 'package:flutter_next_auth/models/sign_in_options.dart';
-import 'package:flutter_next_auth/models/session_status.dart';
-import 'package:flutter_next_auth/oauth/oauth_provider.dart';
-import 'package:flutter_next_auth/oauth/oauth_provider_registry.dart';
-import 'package:flutter_next_auth/services/auth_service.dart';
-import 'package:flutter_next_auth/utils/logger.dart';
+import 'package:flutter_next_auth_client/core/exception/signin_exception.dart';
+import 'package:flutter_next_auth_client/models/sign_in_response.dart';
+import 'package:flutter_next_auth_client/cache/token_cache.dart';
+import 'package:flutter_next_auth_client/config/next_auth_config.dart';
+import 'package:flutter_next_auth_client/events/next_auth_events.dart';
+import 'package:flutter_next_auth_client/models/sign_in_error.dart';
+import 'package:flutter_next_auth_client/models/sign_in_options.dart';
+import 'package:flutter_next_auth_client/models/session_status.dart';
+import 'package:flutter_next_auth_client/oauth/oauth_provider.dart';
+import 'package:flutter_next_auth_client/oauth/oauth_provider_registry.dart';
+import 'package:flutter_next_auth_client/services/auth_service.dart';
+import 'package:flutter_next_auth_client/utils/logger.dart';
 
 /// NextAuth client instance
 /// Create an instance and use it to manage authentication

@@ -1,4 +1,4 @@
-name: flutter_next_auth
+name: flutter_next_auth_client
 description: This is a Flutter client library for quickly integrating with NextAuth v4.x backend authorization APIs.
 version: 1.0.0
 repository: https://github.com/jcyuan/flutter_next_auth

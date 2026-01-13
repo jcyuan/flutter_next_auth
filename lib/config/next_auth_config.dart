@@ -1,5 +1,5 @@
-import 'package:flutter_next_auth/http/http_client.dart';
-import 'package:flutter_next_auth/utils/logger.dart';
+import 'package:flutter_next_auth_client/http/http_client.dart';
+import 'package:flutter_next_auth_client/utils/logger.dart';
 
 class NextAuthConfig<T extends Map<String, dynamic>> {
   /// server address (required)

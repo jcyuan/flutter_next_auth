@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_next_auth/cache/token.dart';
+import 'package:flutter_next_auth_client/cache/token.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Internal token cache for storing authentication tokens
