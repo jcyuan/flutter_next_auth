@@ -1,5 +1,6 @@
 export 'config/next_auth_config.dart';
 export 'core/next_auth_client.dart';
+export 'core/utils/session_serializer.dart';
 export 'events/next_auth_events.dart';
 export 'http/http_client.dart';
 export 'http/http_response.dart';

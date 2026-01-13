@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_next_auth_core/config/next_auth_config.dart';
 import 'package:flutter_next_auth_core/core/next_auth_client.dart';
 import 'package:flutter_next_auth_core/events/next_auth_events.dart';
+import 'package:next_auth_client_example/session_serializer.dart';
 import 'package:next_auth_client_example/simple_dio_httpclient.dart';
 
 // NextAuthClient initialization example
@@ -27,6 +28,11 @@ void main() {
     //   must be the same as the one in the server
     //   recommended to specify a fixed value matching your backend configuration
     serverCSRFTokenCookieName: 'next-auth.csrf-token',
+    // - sessionSerializer: session serializer
+    //   used to serialize and deserialize session data to and from JSON to pass to the server
+    //   you can implement your own session serializer by implementing the SessionSerializer interface
+    //   example: DefaultSessionSerializer<MySessionModel>()
+    sessionSerializer: DefaultSessionSerializer<Map<String, dynamic>>(),
   );
 
   final nextAuthClient = NextAuthClient<Map<String, dynamic>>(config);

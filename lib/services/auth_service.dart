@@ -424,7 +424,7 @@ class AuthService<T> {
     }
   }
 
-  Future<T?> updateSession(T data) async {
+  Future<T?> updateSession(Map<String, dynamic> data) async {
     try {
       final url = apiBaseUrl(_config.domain, _config.authBasePath, 'session');
 
@@ -440,7 +440,7 @@ class AuthService<T> {
       final body = response.body;
       if (body != null && body is Map<String, dynamic> && body.isNotEmpty) {
         await _cacheCSRFCookieFromHeaders(response);
-        return body as T;
+        return _config.sessionSerializer.fromJson(body);
       }
 
       return null;
@@ -491,7 +491,7 @@ class AuthService<T> {
       final body = response.body;
       if (body != null && body is Map<String, dynamic> && body.isNotEmpty) {
         await _cacheCSRFCookieFromHeaders(response);
-        return body as T;
+        return _config.sessionSerializer.fromJson(body);
       }
 
       return null;
