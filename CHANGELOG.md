@@ -18,3 +18,7 @@
 ## 1.0.4 - 2026-1-14
 
 - Improve docs
+
+## 1.0.5 - 2026-1-14
+
+- Fix bug: access token is missing to request session info
