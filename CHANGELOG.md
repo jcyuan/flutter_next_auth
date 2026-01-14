@@ -26,3 +26,7 @@
 ## 1.0.6
 
 - Updated README.md
+
+## 1.0.7
+
+- Add backend OAuth module example codes
