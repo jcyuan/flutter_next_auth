@@ -19,22 +19,10 @@ https://github.com/user-attachments/assets/e061abd7-552d-48df-818f-6082a53c06ef
 
 ## 📦 Installation
 
-### Option 1: Add via CLI (recommended)
+### Add via CLI
 
 ```bash
 flutter pub add flutter_next_auth_core
-```
-
-### Option 2: Edit `pubspec.yaml` manually
-
-```yaml
-dependencies:
-  flutter_next_auth_core: ^1.0.5
-```
-
-Then run:
-
-```bash
 flutter pub get
 ```
 
