@@ -27,8 +27,7 @@ dependencies:
     sdk: flutter
   dio: ^5.1.1
   google_sign_in: ^7.2.0
-  flutter_next_auth_core:
-    path: ../../flutter_next_auth_core
+  flutter_next_auth_core: ^1.1.1
 ```
 
 Note: `dio` is not a dependency of the `flutter_next_auth_core` package. It's only needed in this example because the demo HTTP client implementation uses Dio. You can use any HTTP client library as long as it implements the `HttpClient` interface.
